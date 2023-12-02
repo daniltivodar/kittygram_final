@@ -3,7 +3,7 @@ version: '3'
 volumes:
   pg_data:
   static_volume:
-  media_volume:
+  media:
 
 services:
   db:
@@ -16,7 +16,7 @@ services:
     env_file: .env
     volumes:
       - static_volume:/backend_static/
-      - media_volume:/backend_media/ 
+      - media:/media/ 
   frontend:
     image: sickmoqchima/kittygram_frontend
     env_file: .env
@@ -30,4 +30,4 @@ services:
       - 9000:80
     volumes:
       - static_volume:/staticfiles/
-      - media_volume:/backend_media/
+      - media:/media/

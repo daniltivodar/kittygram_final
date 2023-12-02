@@ -2,8 +2,8 @@ version: '3'
 
 volumes:
   pg_data:
-  static:
-  media:
+  static_volume:
+  media_volume:
 
 services:
   db:
@@ -15,18 +15,18 @@ services:
     image: sickmoqchima/kittygram_backend
     env_file: .env
     volumes:
-      - static:/backend_static
-      - media:/media 
+      - static_volume:/backend_static/
+      - media_volume:/backend_media/ 
   frontend:
-    env_file: .env
     image: sickmoqchima/kittygram_frontend
-    command: cp -r /app/build/. /static/
+    env_file: .env
+    command: cp -r /app/build/. /frontend_static/
     volumes:
-      - static:/frontend_static
+      - static_volume:/frontend_static/
   gateway:
     image: sickmoqchima/kittygram_gateway
     env_file: .env
     ports:
       - 9000:80
     volumes:
-      - static:/staticfiles/
+      - static_volume:/staticfiles/

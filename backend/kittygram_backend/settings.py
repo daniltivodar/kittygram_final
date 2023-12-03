@@ -9,9 +9,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'secret_key')
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG', True)
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', [])
+ALLOWED_HOSTS = list(os.getenv('ALLOWED_HOSTS', []))
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -59,8 +59,8 @@ WSGI_APPLICATION = 'kittygram_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-	'NAME': os.getenv('POSTGRES_DB', 'sickmoqchima'),
+        'ENGINE': os.getenv('SQLITE', 'django.db.backends.postgresql'),
+	    'NAME': os.getenv('POSTGRES_DB', 'sickmoqchima'),
         'USER': os.getenv('POSTGRES_USER', 'django_user'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'django_password'),
         'HOST': os.getenv('DB_HOST', ''),

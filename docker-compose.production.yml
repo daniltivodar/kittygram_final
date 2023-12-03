@@ -1,0 +1,37 @@
+version: '3'
+
+volumes:
+  pg_data:
+  static_volume:
+  media:
+
+services:
+  db:
+    image: postgres:13
+    env_file: .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+  backend:
+    image: sickmoqchima/kittygram_backend
+    env_file: .env
+    depends_on:
+      - db
+    volumes:
+      - static_volume:/backend_static/
+      - media:/app/media
+  frontend:
+    image: sickmoqchima/kittygram_frontend
+    env_file: .env
+    command: cp -r /app/build/. /frontend_static/
+    volumes:
+      - static_volume:/frontend_static/
+  gateway:
+    image: sickmoqchima/kittygram_gateway
+    env_file: .env
+    ports:
+      - 9000:80
+    volumes:
+      - static_volume:/staticfiles/
+      - media:/media/
+
+

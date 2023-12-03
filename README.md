@@ -1,26 +1,72 @@
-#  Как работать с репозиторием финального задания
+Workflow
+(https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
 
-## Что нужно сделать
+### Описание проекта
+Проект kittygram создан для того, чтобы вы могли рассказать о своих котиках всем и каждому,
+показать его фото, рассказать о его достижениях!
 
-Настроить запуск проекта Kittygram в контейнерах и CI/CD с помощью GitHub Actions
+В проекте вы можете постисть своих котиков, смотреть чужих котиков.
+Подробно рассказать о своем котике, выложить его фото, выбрать его цвет и год рождения.
+Также вы можете рассказать о его достижениях. Написать свое, или выбрать уже существующее.
 
-## Как проверить работу с помощью автотестов
 
-В корне репозитория создайте файл tests.yml со следующим содержимым:
-```yaml
-repo_owner: ваш_логин_на_гитхабе
-kittygram_domain: полная ссылка (https://доменное_имя) на ваш проект Kittygram
-taski_domain: полная ссылка (https://доменное_имя) на ваш проект Taski
-dockerhub_username: ваш_логин_на_докерхабе
+### Стек
+```Django```
+```Python```
+```Gunicorn```
+```Nginx```
+```Docker```
+
+
+### Как запустить проект
+```
+Клонируйте репозиторий
+Создайте и заполните .env файл
+Скачайте Docker
+sudo apt update
+sudo apt install curl
+curl -fSL https://get.docker.com -o get-docker.sh
+sudo sh ./get-docker.sh
+sudo apt-get install docker-compose-plugin;
+Перейдите в корень проекта
+sudo docker compose pull
+sudo docker compose down
+sudo docker compose up -d
+sudo docker compose exec backend python manage.py migrate
+sudo docker compose exec backend python manage.py collectstatic
+sudo docker compose exec backend cp -r /app/collect_static/. /static_backend/static/
+Скачайте Nginx
+sudo apt install nginx -y
+sudo systemctl start nginx
+sudo ufw allow 'Nginx Full'
+sudo ufw allow OpenSSH
+sudo ufw enable
+sudo nano /etc/nginx/sites-enabled/default
+Заменяем содержимое файла на это
+
+server {
+    listen 80;
+    server_name example.com;
+    
+    location / {
+        proxy_set_header HOST $host;
+        proxy_pass http://127.0.0.1:9000;
+
+    }
+}
+
+Сохраняем и закрываем файл
+sudo nginx -tsudo systemctl start nginx
 ```
 
-Скопируйте содержимое файла `.github/workflows/main.yml` в файл `kittygram_workflow.yml` в корневой директории проекта.
+### Как заполнить env
+nano .env
+SECRET_KEY = 'django-insecure-cg6*%6d51ef8f#4!r3*$vmxm4)abgjw8mo!4y-q*uq1!4$-89$'
+POSTGRES_USER=username
+POSTGRES_PASSWORD=password
+DB_HOST=db
+DB_PORT=5432
+ALLOWED_HOST=[]
 
-Для локального запуска тестов создайте виртуальное окружение, установите в него зависимости из backend/requirements.txt и запустите в корневой директории проекта `pytest`.
-
-## Чек-лист для проверки перед отправкой задания
-
-- Проект Taski доступен по доменному имени, указанному в `tests.yml`.
-- Проект Kittygram доступен по доменному имени, указанному в `tests.yml`.
-- Пуш в ветку main запускает тестирование и деплой Kittygram, а после успешного деплоя вам приходит сообщение в телеграм.
-- В корне проекта есть файл `kittygram_workflow.yml`.
+###Автор
+Данил Тиводар github: ```https://github.com/daniltivodar```

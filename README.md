@@ -1,5 +1,5 @@
 Workflow
-(https://github.com/daniltivodar/kittygram_final/actions/workflows/main.yml/badge.svg?event=push)
+![](https://github.com/daniltivodar/kittygram_final/actions/workflows/main.yml/badge.svg)
 
 ### Описание проекта
 Проект kittygram создан для того, чтобы вы могли рассказать о своих котиках всем и каждому,

@@ -124,21 +124,21 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v3
     - name: Copy docker-compose.yml via ssh
-      uses: appleboy/scp-action@master
+      uses: pierrickdelrieu/scp-action@v0.1.0
       with:
         host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.SSH_PASSPHRASE }}
+        ssh_username: ${{ secrets.USER }}
+        ssh_key: ${{ secrets.SSH_KEY }}
+        ssh_passphrase: ${{ secrets.SSH_PASSPHRASE }}
         source: "docker-compose.production.yml"
         target: "kittygram"
     - name: Executing remote ssh commands to deploy
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.SSH_PASSPHRASE }}
+        ssh_username: ${{ secrets.USER }}
+        ssh_key: ${{ secrets.SSH_KEY }}
+        ssh_passphrase: ${{ secrets.SSH_PASSPHRASE }}
         script: |
           cd kittygram
           sudo docker compose -f docker-compose.production.yml pull

@@ -123,11 +123,6 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v3
-    - name: Copy docker-compose.yml via ssh
-      run: |
-        scp -i ${{ secrets.SSH_KEY }} docker-compose.production.yml \ 
-          ${{ secrets.USER }}@${{ secrets.HOST }}:/home/${{ secrets.USER }}/kittygram/docker-compose.production.yml
-        ${{ secrets.SSH_PASSPHRASE }}
     - name: Executing remote ssh commands to deploy
       uses: appleboy/ssh-action@master
       with:
